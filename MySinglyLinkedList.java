@@ -7,6 +7,7 @@ import java.util.ListIterator;
 
 /*
  * @author:- Elijah Einstein
+ * Will add an iterator soon !
  */
 
 public class MySinglyLinkedList<E> implements List<E> {
