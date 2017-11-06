@@ -9,6 +9,11 @@ import java.util.NoSuchElementException;
 
 import myArrayList.Construction1.MyArrayList;
 
+/*
+*@author:- Elijah Einstein
+*	   This is an array based implementation of stack
+**/
+
 public class MyStackArray<E> implements List<E> {
 	
 	MyArrayList<E> ma;
