@@ -7,6 +7,14 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+/*
+*@author:- Elijah Einstein.
+* 	   
+*	   This list object has a myArrayListIterator() which returns a MyArrayListIterator Object. This iterator object implements 
+*	    Iterator interface. 
+*
+*/
+
 public class MyArrayList<E> implements List<E> {
 	
 	
