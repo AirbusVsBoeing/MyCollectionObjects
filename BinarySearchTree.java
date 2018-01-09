@@ -1,5 +1,7 @@
 package myBinarySearchTree.Construction2;
 
+import myQueue.Construction1.Queue;
+
 /**
  * @author Elijah Einstein ENJOY !!
  * 
@@ -17,6 +19,7 @@ public class BinarySearchTree<E extends Comparable> {
 		}
 	}
 
+	private Queue<E> q = new Queue<E>();
 	private Node<E> root;
 	private int size;
 	private int modCount;
@@ -81,7 +84,7 @@ public class BinarySearchTree<E extends Comparable> {
 	}
 
 	public boolean contains(E elem) {
-		if (size == 0 || root == null)
+		if (size == 0)
 			throw new IllegalArgumentException();
 		if (root.element.compareTo(elem) == 0)
 			return true;
@@ -141,10 +144,36 @@ public class BinarySearchTree<E extends Comparable> {
 	public boolean remove(E elem) {
 		Node<E> toRemove = search(elem);
 		if (root == toRemove) {
-			root = null;
-			--size;
-			++modCount;
-			return true;
+			Node<E> current = root.right;
+			if (current != null) {
+				if (current.left != null) {
+					while (current.left.left != null)
+						current = current.left;
+					Node<E> toReplace = current.left;
+					current.left = null;
+					root.element = toReplace.element;
+					--size;
+					++modCount;
+					return true;
+				}
+				root.element = current.element;
+				root.right = current.right;
+				--size;
+				++modCount;
+				return true;
+			}
+			current = root.left;
+			if (current != null) {
+				root.element = current.element;
+				root.left = current.left;
+				--size;
+				++modCount;
+				return true;
+			} else {
+				root = null;
+				--size;
+				++modCount;
+			}
 		}
 		if (toRemove.right == null && toRemove.left == null) {
 			Node<E> parentNode = toRemove.parent;
@@ -202,27 +231,66 @@ public class BinarySearchTree<E extends Comparable> {
 	public int size() {
 		return size;
 	}
-	
-	
+
 	public int height() {
 		return height(root);
 	}
-	
-	
+
 	private int height(Node<E> node) {
-		if(node==null)
+		if (node == null)
 			return 0;
 		int leftHeight = height(node.left);
 		int rightHeight = height(node.right);
 		int height = 0;
-		if(leftHeight>rightHeight)
-			height = 1+leftHeight;
+		if (leftHeight > rightHeight)
+			height = 1 + leftHeight;
 		else
-			height = 1+rightHeight;
-		
+			height = 1 + rightHeight;
+
 		return height;
 	}
-	
-	
+
+	public E inorderSuccessor(E elem) {
+
+		Node<E> node = this.search(elem);
+
+		if (node.right != null) {
+			Node<E> current = node.right;
+			while (current.left != null)
+				current = current.left;
+			return current.element;
+		}
+		Node<E> current = root;
+		Node<E> store = null;
+		while (current != null) {
+			if (elem.compareTo(current.element) > 0)
+				current = current.right;
+			else {
+				store = current;
+				current = current.left;
+			}
+		}
+		return store.element;
+	}
+
+	public E inorderPredecessor(E elem) {
+		Node<E> node = this.search(elem);
+		if (node.left != null) {
+			Node<E> current = node.left;
+			while (current != null)
+				current = current.right;
+			return current.element;
+		}
+		Node<E> current = root;
+		Node<E> store = null;
+		while (current != null) {
+			if (elem.compareTo(current.element) > 0) {
+				store = current;
+				current = current.right;
+			} else
+				current = current.left;
+		}
+		return store.element;
+	}
 
 }
