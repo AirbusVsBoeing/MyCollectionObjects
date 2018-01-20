@@ -307,10 +307,13 @@ public class BinarySearchTree<E extends Comparable> {
 		if (size == 0)
 			throw new IllegalArgumentException();
 		newElements = new ArrayList<E>();
-		E current = root.element;
+		Node<E> temp = root;
+		while(temp.left!=null)
+			temp = temp.left;
+		E current = temp.element;
 		int count = 0;
 		while (count < size - 1) {
-			if (lowerBound.compareTo(current) < 0 && upperBound.compareTo(current) > 0)
+			if (lowerBound.compareTo(current) <=0 && upperBound.compareTo(current) >=0)
 				newElements.add(current);
 			current = this.inorderSuccessor(current);
 			++count;
