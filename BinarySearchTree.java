@@ -1,12 +1,17 @@
 package myBinarySearchTree.Construction2;
 
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
 import myQueue.Construction1.Queue;
 
 /**
- * @author Elijah Einstein ENJOY !!
+ * @author Elijah Einstein ENJOY !! Trim functionality added
  * 
  */
 public class BinarySearchTree<E extends Comparable> {
+
+	private ArrayList<E> newElements;
 
 	private class Node<E extends Comparable> {
 		E element;
@@ -127,7 +132,7 @@ public class BinarySearchTree<E extends Comparable> {
 		if (elem.compareTo(root.element) < 0)
 			return search(root.left, elem);
 
-		return null;
+		throw new NoSuchElementException();
 	}
 
 	private Node<E> search(Node<E> node, E elem) {
@@ -138,7 +143,7 @@ public class BinarySearchTree<E extends Comparable> {
 		if (elem.compareTo(node.element) < 0)
 			return search(node.left, elem);
 
-		return null;
+		throw new NoSuchElementException();
 	}
 
 	public boolean remove(E elem) {
@@ -291,6 +296,31 @@ public class BinarySearchTree<E extends Comparable> {
 				current = current.left;
 		}
 		return store.element;
+	}
+
+	public void clear() {
+		root = null;
+		size = 0;
+	}
+
+	public void trim(E lowerBound, E upperBound) {
+		if (size == 0)
+			throw new IllegalArgumentException();
+		newElements = new ArrayList<E>();
+		newElements.add(root.element);
+		E current = root.element;
+		int count = 0;
+		while (count < size - 1) {
+			if (lowerBound.compareTo(current) < 0 && upperBound.compareTo(current) > 0)
+				newElements.add(current);
+			current = this.inorderSuccessor(current);
+			++count;
+		}
+
+		this.clear();
+		for (E elem : newElements)
+			this.insert(elem);
+		newElements = null;
 	}
 
 }
