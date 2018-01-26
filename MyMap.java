@@ -1,4 +1,4 @@
-package ds.module1;
+package myDoublyLinkedList.Construction1;;
 
 import java.util.Collection;
 import java.util.Map;
