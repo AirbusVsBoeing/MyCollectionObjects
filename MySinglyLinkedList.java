@@ -178,6 +178,28 @@ public class MySinglyLinkedList<E> implements List<E> {
 		
 		return size==0;
 	}
+	
+	public void reverseList() {
+		Node<E> p=head;
+		Node<E> q = head;
+		int i=0;
+		int j=size-1;
+		
+		while(i<j){
+			int k=0;
+			while(k<j){
+				q=q.next;
+				++k;
+			}
+			E temp = p.element;
+			p.element=q.element;
+			q.element=temp;
+			++i;
+			--j;
+			p=p.next;
+			q=head;
+		}
+	}
 
 	@Override
 	public Iterator<E> iterator() {
